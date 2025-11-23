@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Essential for responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Progress</title>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+         body{
+            background:linear-gradient(to bottom right,rgb(113, 75, 0) ,rgb(0, 0, 0) , rgb(46, 31, 0)100% );
+            min-height: 95vh;
+            height: auto;
+            font-family: Inter;
+        }
+
+        header h1{
+            font-family: Outfit, sans-serif;
+            font-size: 2.5em; 
+            background: linear-gradient(to bottom right,rgb(255, 217, 0) 35%, rgb(255, 174, 0) 100%);
+            background-clip: text; 
+            color: transparent;
+            background-size: 200% auto; 
+            animation: animate-gradient-text 3s linear infinite; 
+        }
+
+       @keyframes animate-gradient-text {
+        to {
+            background-position:200% center;
+        }
+        }
+
+        .container{
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+
+        .back-link{
+            padding: 7px 15px;
+            font-size: 14px;
+            font-family: Inter;
+            font-weight: 500;
+            background-color: rgb(255, 218, 137);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            margin-right: 3%;
+            transition: all .5s;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        .back-link:hover{
+            background-color: white;
+            border: 3px solid;
+            border-color: rgb(255, 218, 137);
+        }
+
+        .progress-title-section{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            padding: 10px;
+            width: 97%;
+            margin-bottom: 1%;
+        }
+
+        .progress-title{
+            color:whitesmoke;
+            font-weight: 700;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+         .small-card {
+          background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 220px;
+            height: 200px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 15px 20px; /* Adjusted padding */
+            text-align: center;
+            /* Added flexbox to structure the content */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .weight-section {
+            display: flex;
+            column-gap: 50px;
+            margin-top: 2%;
+        }
+
+        /* --- New CSS for the Widgets --- */
+
+        .gauge-container {
+            width: 100%;
+            height: 80px; /* Fixed height for the gauge area */
+            position: relative;
+        }
+
+        .gauge-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .gauge-track {
+            fill: none;
+            stroke: #e8e8e8;
+            stroke-width: 20;
+            stroke-linecap: round;
+        }
+        
+        .gauge-value {
+            fill: none;
+            stroke-width: 20;
+            stroke-linecap: round;
+            transform-origin: center;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        /* Gradient for the weight gauge */
+        #weight-gradient-a { stop-color: #00b4d8; }
+        #weight-gradient-b { stop-color: #90e0ef; }
+        
+        /* Specific color for the body fat track */
+        .body-fat-track {
+            stroke: #ffe8b5;
+        }
+
+        .gauge-text {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 22px;
+            font-weight: 700;
+        }
+         
+        .gauge-text .unit {
+            font-weight: 500;
+            color: #d4d4d4;
+        }
+
+        /* Needle for the body fat gauge */
+        .gauge-needle {
+            fill: #ff6b3d;
+            transform-origin: center 80px; /* Rotate around the base of the gauge */
+            transition: transform 0.3s ease-out;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .control-button {
+            border: none;
+            background: none;
+            font-size: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #d4d4d4;
+        }
+        
+        .value-display {
+            font-size: 20px;
+            font-weight: 700;
+            color: #000000;
+        }
+        
+        .value-display .unit {
+            font-weight: 500;
+            color: #d4d4d4;
+        }
+        
+        .widget-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #d4d4d4;
+        }
+
+        .weight-section{
+            display: flex;
+            column-gap: 50px;
+            margin-top: 2%;
+        }
+
+        .card-3 {
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 490px;
+            height: 170px;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: Inter;
+        }
+
+        .date-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .month-year {
+            font-size: 22px;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .nav-buttons button {
+            border: none;
+            background-color: #f5f5f5;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 16px;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .week-view {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            width: 45px;
+            height: 65px;
+            text-align: center;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .day-initial {
+            font-size: 14px;
+            color: #d4d4d4;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .day-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .day.selected {
+            background-color: #ffe3a2;
+        }
+
+        .day.selected .day-initial,
+        .day.selected .day-number {
+            color: #3a3a3a;
+        }
+        
+        #progressForm{
+            display: flex;
+            flex-direction: column;
+            row-gap: 40px;
+            align-items: start;
+        }
+
+        .log-btn{
+            width: 490px;
+            padding: 6px;
+            font-size: 18px;
+            font-family: Inter;
+            font-weight: 600;
+            background-color: rgb(255, 218, 137);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            margin-right: 3%;
+            transition: all .5s;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        .log-btn:hover{
+            background-color: rgb(255, 255, 255);
+            border: 3px solid;
+            border-color: rgb(213, 160, 47);
+        }
+
+        .content-section{
+            display: flex;
+            column-gap: 100px;
+            align-items: flex-start;
+        }
+		
+		#progressList table{
+			background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 800px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            border-collapse: collapse;
+		}
+		
+		#progressList table th{
+			padding: 15px;
+			margin-top:10px;
+			padding-left: 45px;
+			padding-top: 20px;
+			color: #ffe3a2;
+            text-align: left;
+		}
+
+		#progressList tbody td{
+			padding: 15px;
+			padding-left: 45px;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+		}
+
+        #progressList tr:last-child td {
+            border-bottom: none; /* Remove border from the last row */
+        }
+		
+		#progressList tr{
+			text-align: left;
+		}
+
+        /* ================================================================== */
+        /* =========== NEW - RESPONSIVE STYLES START HERE =========== */
+        /* ================================================================== */
+
+        /* For Tablets and smaller laptops */
+        @media (max-width: 1350px) {
+            .content-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 50px;
+            }
+            .data-list-section {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #progressList, #progressList table {
+                width: 100%;
+                max-width: 800px; /* Keep a max width for readability */
+            }
+        }
+
+        /* For Mobile Phones */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+                text-align: center;
+            }
+            .progress-title-section {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            #progressForm {
+                align-items: center; /* Center form elements */
+            }
+
+            .weight-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px; /* Use gap for spacing */
+                width: 100%;
+            }
+            .small-card, .card-3, .log-btn {
+                width: 100%;
+                max-width: 400px; /* Prevent elements from being too wide */
+            }
+
+            .card-3 {
+                height: auto; /* Allow height to adjust */
+            }
+            
+            #progressList {
+                overflow-x: auto; /* Allow table to be scrolled horizontally */
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Track Your Progress</h1>
+        </header>
+         <div class="progress-title-section">
+                <div class="progress-title">Log New Progress</div> 
+                <a href="/dashboard.html" class="back-link">Back to Dashboard</a>
+            </div>
+
+        <div class="content-section">
+            <section class="form-section">
+            <form id="progressForm">
+                
+                <div class="weight-section">
+                    <div class="small-card">
+            <div class="gauge-container">
+                <svg viewBox="0 0 180 100" class="gauge-svg">
+                     <!-- Define the gradient for the progress bar -->
+                    <defs>
+                        <linearGradient id="weightGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop id="weight-gradient-a" offset="0%" />
+                            <stop id="weight-gradient-b" offset="100%" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Background Track -->
+                    <path class="gauge-track" d="M 15 90 A 75 75 0 0 1 165 90" />
+                    <!-- Value Progress Bar -->
+                    <path class="gauge-value" id="weight-value-path" d="M 15 90 A 75 75 0 0 1 165 90" stroke="url(#weightGradient)" />
+                </svg>
+                <div id="weight-text" class="gauge-text">75 <span class="unit">kg</span></div>
+            </div>
+            <div class="controls">
+                <button id="weight-plus" class="control-button">+</button>
+                <span class="widget-label">Weight</span>
+                <button id="weight-minus" class="control-button">-</button>
+            </div>
+        </div>
+
+        <!-- Body Fat Widget -->
+        <div class="small-card">
+            <div class="gauge-container">
+                <svg viewBox="0 0 180 100" class="gauge-svg">
+                    <!-- Background Gauge Track -->
+                    <path class="gauge-track body-fat-track" d="M 15 90 A 75 75 0 0 1 165 90" />
+                    <!-- Needle -->
+                    <path class="gauge-needle" id="body-fat-needle" d="M 85 80 L 90 20 L 95 80 Z" />
+                </svg>
+            </div>
+            <div class="controls">
+                <button id="body-fat-plus" class="control-button">+</button>
+                <span id="body-fat-value" class="value-display">18.2 <span class="unit">%</span></span>
+                <button id="body-fat-minus" class="control-button">-</button>
+            </div>
+            <span class="widget-label">Body Fat</span>
+        </div>
+                </div>
+
+                <div class="second-section">
+                    <div class="card-3">
+                    <div class="date-selector-header">
+                        <div id="month-year" class="month-year"></div>
+                        <div class="nav-buttons">
+                            <button id="prev-week">←</button>
+                            <button id="next-week">→</button>
+                        </div>
+                    </div>
+                    <ul id="week-view" class="week-view">
+                        <!-- Days will be generated by JavaScript -->
+                    </ul>
+                    </div>
+                 </div>
+
+                <button class="log-btn" type="submit">Log Progress</button>
+            </form>
+            <p id="message" class="message"></p>
+        </section>
+
+        <section class="data-list-section">
+            <h2 style="color: white;">Your Progress Log</h2>
+            <div id="progressList" class="data-list" style="color:white">
+                
+            </div>
+        </section>
+        </div>
+        
+    </div>
+    <script src="/js/script.js"></script>
+    <script>
+		document.addEventListener('DOMContentLoaded', () => {
+		   
+		    const addHoldFunctionality = (button, action, delay = 400, speed = 40) => {
+		        let timerId;
+		        let intervalId;
+
+		        const stopActions = () => {
+		            clearTimeout(timerId);
+		            clearInterval(intervalId);
+		        };
+
+		        const startActions = (e) => {
+		            e.preventDefault();
+		            timerId = setTimeout(() => {
+		                intervalId = setInterval(action, speed);
+		            }, delay);
+		        };
+
+		        button.addEventListener('mousedown', startActions);
+		        button.addEventListener('touchstart', startActions, { passive: false });
+				button.addEventListener('mouseup', stopActions);
+		        button.addEventListener('mouseleave', stopActions);
+		        button.addEventListener('touchend', stopActions);
+		    };
+
+		    const weightValuePath = document.getElementById('weight-value-path');
+		    const weightText = document.getElementById('weight-text');
+		    const weightPlusBtn = document.getElementById('weight-plus');
+		    const weightMinusBtn = document.getElementById('weight-minus');
+
+		    let currentWeight = 75;
+		    const maxWeight = 300;
+		    const minWeight = 0;
+		    const pathLength = weightValuePath.getTotalLength();
+
+		    const updateWeightUI = () => {
+		        weightText.innerHTML = `${currentWeight} <span class="unit">kg</span>`;
+		        const progress = Math.max(0, currentWeight / maxWeight);
+		        const offset = pathLength * (1 - progress);
+		        weightValuePath.style.strokeDasharray = pathLength;
+		        weightValuePath.style.strokeDashoffset = offset;
+		    };
+
+		    const incrementWeight = () => {
+		        if (currentWeight < maxWeight) {
+		            currentWeight++;
+		            updateWeightUI();
+		        }
+		    };
+
+		    const decrementWeight = () => {
+		        if (currentWeight > minWeight) {
+		            currentWeight--;
+		            updateWeightUI();
+		        }
+		    };
+		    
+		    weightPlusBtn.addEventListener('click', (e) => { e.preventDefault(); incrementWeight(); });
+		    weightMinusBtn.addEventListener('click', (e) => { e.preventDefault(); decrementWeight(); });
+
+		    addHoldFunctionality(weightPlusBtn, incrementWeight);
+		    addHoldFunctionality(weightMinusBtn, decrementWeight);
+
+
+		    const bodyFatNeedle = document.getElementById('body-fat-needle');
+		    const bodyFatValue = document.getElementById('body-fat-value');
+		    const bodyFatPlusBtn = document.getElementById('body-fat-plus');
+		    const bodyFatMinusBtn = document.getElementById('body-fat-minus');
+
+		    let currentBodyFat = 18.2;
+		    const maxBodyFat = 100;
+		    const minBodyFat = 0;
+		    const totalAngle = 180;
+
+		    const updateBodyFatUI = () => {
+		        bodyFatValue.innerHTML = `${currentBodyFat.toFixed(1)} <span class="unit">%</span>`;
+		        const progress = Math.max(0, currentBodyFat / maxBodyFat);
+		        const angle = (progress * totalAngle) - 90;
+		        bodyFatNeedle.style.transform = `rotate(${angle}deg)`;
+		    };
+		    
+		    const incrementBodyFat = () => {
+		        if (currentBodyFat < maxBodyFat) {
+		            currentBodyFat = Math.min(maxBodyFat, currentBodyFat + 0.1);
+		            updateBodyFatUI();
+		        }
+		    };
+
+		    const decrementBodyFat = () => {
+		        if (currentBodyFat > minBodyFat) {
+		            currentBodyFat = Math.max(minBodyFat, currentBodyFat - 0.1);
+		            updateBodyFatUI();
+		        }
+		    };
+		    
+		    bodyFatPlusBtn.addEventListener('click', (e) => { e.preventDefault(); incrementBodyFat(); });
+		    bodyFatMinusBtn.addEventListener('click', (e) => { e.preventDefault(); decrementBodyFat(); });
+
+		    addHoldFunctionality(bodyFatPlusBtn, incrementBodyFat);
+		    addHoldFunctionality(bodyFatMinusBtn, decrementBodyFat);
+
+		    updateWeightUI();
+		    updateBodyFatUI();
+
+		    const monthYearEl = document.getElementById('month-year');
+		    const weekViewEl = document.getElementById('week-view');
+		    const prevWeekBtn = document.getElementById('prev-week');
+		    const nextWeekBtn = document.getElementById('next-week');
+
+		    let currentDate = new Date();
+
+		    const renderWeek = () => {
+		        weekViewEl.innerHTML = '';
+		        const year = currentDate.getFullYear();
+		        const month = currentDate.toLocaleString('default', { month: 'long' });
+		        monthYearEl.textContent = `${month} ${year}`;
+		        let startOfWeek = new Date(currentDate);
+		        startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+		        for (let i = 0; i < 7; i++) {
+		            let day = new Date(startOfWeek);
+		            day.setDate(day.getDate() + i);
+		            const dayItem = document.createElement('li');
+		            dayItem.classList.add('day');
+		            dayItem.dataset.date = day.toISOString().split('T')[0];
+		            const today = new Date();
+		            if (day.toDateString() === today.toDateString()) {
+		                dayItem.classList.add('selected');
+		            }
+		            const dayInitial = day.toLocaleDateString('en-US', { weekday: 'narrow' });
+		            const dayNumber = day.getDate();
+		            dayItem.innerHTML = `
+		                <span class="day-initial">${dayInitial}</span>
+		                <span class="day-number">${dayNumber}</span>
+		            `;
+		            weekViewEl.appendChild(dayItem);
+		        }
+		    };
+		    
+		    weekViewEl.addEventListener('click', (e) => {
+		        const selectedDayEl = e.target.closest('.day');
+		        if (!selectedDayEl) return;
+		        const previouslySelected = weekViewEl.querySelector('.selected');
+		        if (previouslySelected) {
+		            previouslySelected.classList.remove('selected');
+		        }
+		        selectedDayEl.classList.add('selected');
+		    });
+
+		    prevWeekBtn.addEventListener('click', (e) => {
+		        e.preventDefault();
+		        currentDate.setDate(currentDate.getDate() - 7);
+		        renderWeek();
+		    });
+
+		    nextWeekBtn.addEventListener('click', (e) => {
+		        e.preventDefault();
+		        currentDate.setDate(currentDate.getDate() + 7);
+		        renderWeek();
+		    });
+
+		    renderWeek();
+		});
+    </script>
+</body>
+</html>

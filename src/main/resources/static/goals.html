@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Set Your Goals</title>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+         body{
+            background:linear-gradient(to bottom right,rgb(113, 75, 0) ,rgb(0, 0, 0) , rgb(46, 31, 0)100% );
+            min-height: 95vh;
+            height: auto;
+            font-family: Inter;
+        }
+
+        header h1{
+            font-family: Outfit, sans-serif;
+            font-size: 2.5em; 
+            background: linear-gradient(to bottom right,rgb(255, 217, 0) 35%, rgb(255, 174, 0) 100%);
+            background-clip: text; 
+            color: transparent;
+            background-size: 200% auto; 
+            animation: animate-gradient-text 3s linear infinite; 
+        }
+
+       @keyframes animate-gradient-text {
+        to {
+            background-position:200% center;
+        }
+        }
+
+        .container{
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+
+        .back-link{
+            padding: 7px 15px;
+            font-size: 14px;
+            font-family: Inter;
+            font-weight: 500;
+            background-color: rgb(255, 218, 137);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            margin-right: 3%;
+            transition: all .5s;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        .back-link:hover{
+            background-color: white;
+            border: 3px solid;
+            border-color: rgb(255, 218, 137);
+        }
+
+        .goal-title-section{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            padding: 10px;
+            width: 97%;
+            margin-bottom: 1%;
+        }
+
+        .goal-title{
+            color:whitesmoke;
+            font-weight: 700;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+        .tiny-card{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 490px;
+            height: 55px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .tiny-card input{
+            padding: 7px;
+            padding-left: 20px;
+            width: 330px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tiny-card label{
+            font-weight: 700;
+            font-size: 18px;
+            margin-left: 20px;
+            margin-right: 10px;
+        }
+
+        .goal-section {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            margin-top: 2%;
+        }
+
+        .small-card {
+           background: rgba(255, 255, 255, 0.397);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 490px; 
+            height: 140px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            text-align: left; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .gauge-container {
+            width: 100%;
+            height: 80px;
+            position: relative;
+        }
+
+        .gauge-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .gauge-track {
+            fill: none;
+            stroke: #e8e8e8;
+            stroke-width: 20;
+            stroke-linecap: round;
+        }
+        
+        .gauge-value {
+            fill: none;
+            stroke-width: 20;
+            stroke-linecap: round;
+            transform-origin: center;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        /* Gradient for the gauge */
+        #target-gradient-a { stop-color: #d89000; }
+        #target-gradient-b { stop-color: #efd490; }
+
+        .gauge-text {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 22px;
+            font-weight: 700;
+        }
+         
+        .gauge-text .unit {
+            font-weight: 500;
+            color: #c9c9c9;
+            font-size: 16px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .control-button {
+            border: none;
+            background: none;
+            font-size: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #000000;
+        }
+        
+        .widget-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #c9c9c9;
+        }
+
+        .card-3 {
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 490px;
+            height: 170px;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: Inter;
+        }
+
+        .date-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .month-year {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .nav-buttons button {
+            border: none;
+            background-color: #f5f5f5;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 16px;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .week-view {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            width: 45px;
+            height: 65px;
+            text-align: center;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .day-initial {
+            font-size: 14px;
+            color: #d4d4d4;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .day-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .day.selected {
+            background-color: #ffe3a2;
+        }
+
+        .day.selected .day-initial,
+        .day.selected .day-number {
+            color: #3a3a3a;
+        }
+
+        .second-section{
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+        }
+
+        .status-text {
+            color: #000;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* The Background Track of the Toggle */
+        .status-toggle {
+            width: 160px; /* Width of the pill */
+            height: 60px; /* Height of the pill */
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.4s ease;
+            /* Center the toggle horizontally in the card */
+            margin: 0 auto; 
+        }
+
+        /* The White Circular Button */
+        .toggle-circle {
+            width: 48px;
+            height: 48px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 6px; /* Centered vertically */
+            left: 6px; /* Starting position */
+            transition: left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy effect */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* --- STATE 1: Not Started (Grey) --- */
+        .status-toggle.not-started {
+            background-color: rgb(208, 208, 208);
+        }
+        .status-toggle.not-started .toggle-circle {
+            left: 6px;
+        }
+
+        /* --- STATE 2: Inprogress (Orange) --- */
+        .status-toggle.inprogress {
+            background-color: #ffbd59;
+        }
+        .status-toggle.inprogress .toggle-circle {
+            left: 56px; /* Center: (160w - 48w)/2 */
+        }
+
+        /* --- STATE 3: Completed (Green) --- */
+        .status-toggle.completed {
+            background-color: #00c853;
+        }
+        .status-toggle.completed .toggle-circle {
+            left: 106px; /* Right: 160w - 48w - 6px padding */
+        }
+
+        #goalForm{
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            align-items: start;
+        }
+
+        .log-btn{
+            width: 490px;
+            padding: 6px;
+            font-size: 18px;
+            font-family: Inter;
+            font-weight: 600;
+            background-color: rgb(255, 218, 137);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            margin-right: 3%;
+            transition: all .5s;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        .log-btn:hover{
+            background-color: rgb(255, 255, 255);
+            border: 3px solid;
+            border-color: rgb(213, 160, 47);
+        }
+
+        .content-section{
+            display: flex;
+            column-gap: 100px;
+        }
+		
+		#goalList table{
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 800px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            border-collapse: collapse;
+        }
+        
+        #goalList table th{
+            padding: 15px;
+            margin-top:10px;
+            padding-left: 45px;
+            padding-top: 20px;
+            color: #ffe3a2;
+            text-align: left;
+        }
+    
+        #goalList tbody td{
+            padding: 15px;
+            padding-left: 45px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            color: whitesmoke;
+        }
+    
+        #goalList tr:last-child td {
+            border-bottom: none; /* Remove border from the last row */
+        }
+        
+        #goalList tr{
+            text-align: left;
+        }
+
+        @media (max-width: 1350px) {
+            .content-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 50px;
+            }
+            .data-list-section {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #goalList, #goalList table {
+                width: 100%;
+                max-width: 800px; 
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container data-container">
+        <header>
+            <h1>Set Your Goals</h1>
+        </header>
+        
+         <div class="goal-title-section">
+            <div class="goal-title">Create a New Goal</div> 
+            <a href="/dashboard.html" class="back-link">Back to Dashboard</a>
+         </div>
+
+        <div class="content-section">
+
+            <section class="form-section">
+           
+            <form id="goalForm">
+                <div class="goal-section">
+                    <div class="tiny-card">
+                        <label for="goalType">Goal Type:</label>
+                        <input type="text" id="goalType" placeholder="e.g., Weight Loss, Run 5k" required>
+                    </div>
+
+                    <div class="small-card">
+                        <div class="gauge-container">
+                            <svg viewBox="0 0 180 100" class="gauge-svg">
+                                <!-- Define the gradient for the progress bar -->
+                                <defs>
+                                    <linearGradient id="targetGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop id="target-gradient-a" offset="0%" />
+                                        <stop id="target-gradient-b" offset="100%" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Background Track -->
+                                <path class="gauge-track" d="M 15 90 A 75 75 0 0 1 165 90" />
+                                <!-- Value Progress Bar -->
+                                <path class="gauge-value" id="target-value-path" d="M 15 90 A 75 75 0 0 1 165 90" stroke="url(#targetGradient)" />
+                            </svg>
+                            <div id="target-text" class="gauge-text">0<span class="unit">Kg</span></div>
+                        </div>
+                        <div class="controls">
+                        <button type="button" id="target-plus" class="control-button">+</button>
+                        <span class="widget-label">Target</span>
+                        <button type="button" id="target-minus" class="control-button">-</button>
+                    </div>
+                    </div>
+
+                </div>
+                
+                <div class="second-section">
+                    <!-- Start Date Calendar -->
+                    <div class="card-3">
+                    <div class="date-selector-header">
+                        <div id="startdate-header" class="month-year"></div>
+                        <div class="nav-buttons">
+                            <button id="prev-week-start">←</button>
+                            <button id="next-week-start">→</button>
+                        </div>
+                    </div>
+                    <ul id="week-view-start" class="week-view">
+                        <!-- Days will be generated by JavaScript -->
+                    </ul>
+                    </div>
+
+                    <!-- Target Date Calendar -->
+                    <div class="card-3">
+                    <div class="date-selector-header">
+                        <div id="targetdate-header" class="month-year"></div>
+                        <div class="nav-buttons">
+                            <button id="prev-week-target">←</button>
+                            <button id="next-week-target">→</button>
+                        </div>
+                    </div>
+                    <ul id="week-view-target" class="week-view">
+                        <!-- Days will be generated by JavaScript -->
+                    </ul>
+                    </div>
+                 </div>
+
+                 <div class="small-card">
+                     <div class="status-text">
+                        <strong>Status : </strong> <span id="status-label">Not started</span>
+                    </div>
+
+                    
+                    <div class="status-toggle not-started" id="status-toggle">
+                        <div class="toggle-circle"></div>
+                    </div>
+                 </div>
+
+                <button class="log-btn" type="submit">Set Goal</button>
+            </form>
+            <p id="message" class="message"></p>
+        </section>
+
+        <section class="data-list-section">
+            <h2 style="color: white;">Your Goals</h2>
+            <div id="goalList" class="data-list">
+                
+            </div>
+        </section>
+
+        </div>
+        
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>

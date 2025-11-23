@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+
+        body{
+            background:linear-gradient(to bottom right,rgb(113, 75, 0) ,rgb(0, 0, 0) , rgb(46, 31, 0)100% );
+            min-height: 94.5vh;
+            height: auto;
+        }
+        .container{
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        header h1{
+            font-family: Outfit, sans-serif;
+            font-size: 3em; 
+            background: linear-gradient(to bottom right,rgb(255, 217, 0) 35%, rgb(255, 174, 0) 100%);
+            background-clip: text; 
+            color: transparent;
+            background-size: 200% auto; 
+            animation: animate-gradient-text 3s linear infinite; 
+        }
+
+       @keyframes animate-gradient-text {
+        to {
+            background-position:200% center;
+        }
+        }
+
+        nav{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            width: 97%;
+            margin-bottom: 1%;
+        }
+
+        nav a {
+            font-size: 16px;
+            text-decoration: none;
+            color: black;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 15px;
+            position: relative; 
+            z-index: 1;
+            overflow: hidden; 
+            transition: color 0.4s ease-in-out;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(255, 218, 137);
+            border-radius: 15px;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.4s ease-in-out;
+            z-index: -1;
+        }
+
+        nav a:hover {
+            color: #333; 
+        }
+
+        nav a:hover::before {
+            transform: scaleX(1);
+        }
+
+        .activity-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 20px;
+            padding-left: 20px;
+        }
+
+        #logoutBtn{
+            padding: 5px 15px;
+            font-size: 16px;
+            font-family: Inter;
+            font-weight: 500;
+            background-color: rgb(255, 218, 137);
+            border: 3px solid transparent;
+            border-radius: 15px;
+            margin-right: 2%;
+            transition: all .5s;
+        }
+
+        #logoutBtn:hover{
+            background-color: white;
+            border: 3px solid;
+            border-color: rgb(255, 218, 137);
+        }
+
+        .first-section,.second-section,.fourth-section,.fifth-section,.sixth-section,.seventh-section{
+            display: flex;
+            align-items: center;
+            column-gap: 3%;
+            margin-top: 5%;
+        }
+
+        .fifth-section .card{
+            margin-top: 50px;
+        }
+
+        .main-section{
+            display: flex;
+            align-items: flex-start; 
+            column-gap: 20px; /* Adjusted for better spacing */
+            /* flex-wrap: wrap; <--- THIS LINE WAS REMOVED to keep sections in a single row */
+        }
+
+        .card{
+            background: rgba(255, 255, 255, 0.386);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 210px;
+            height: 130px;
+            font-family: Inter;
+            display: flex;
+            flex-direction: column;
+            font-size: 18px;
+            font-weight: 500;
+            justify-content: space-between;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card:hover{
+            background: rgba(255, 255, 255, 0.892);
+            transform: scale(1.1,1.1);
+        }
+
+        .card:hover span{
+            color: black;
+        }
+
+        .card:hover .card-icon{
+            animation: shake 1s ease-in-out;
+            background: rgba(53, 53, 53, 0.892);
+        }
+
+        .card-title{
+            width: 100px;
+            padding-left: 15px;
+            padding-top: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .card span{
+            color: #d4d4d4;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(0px); }
+            40% { transform: translateX(-10px); }
+            60% { transform: translateX(-10px); }
+            80% { transform: translateX(0px); }
+            100% { transform: translateX(0); }
+        }
+
+        .card-icon{
+            background-color: #c2c2c2a9;
+            font-size: 20px;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            border-radius: 20px;
+            padding: 3px;
+            margin-top: 15px;
+            margin-right: 15px;
+            
+        }
+
+        .calorie-section,.distance-section,.hours-section,.bedtime-section,.rest-section,.heart-section,.swimming-section,.water-section,.weightlift-section,.running-section{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .steps-section{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .small-card{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 170px;
+            height: 170px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-count{
+            padding-bottom: 20px;
+            padding-left: 20px;
+        }
+
+
+        .card-3 {
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 430px;
+            height: 150px;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: Inter;
+        }
+
+       .card-4 {
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 420px;
+            min-height: 180px;
+            height: auto;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 3%;
+            font-family: Inter;
+        }
+        
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            height: 60%;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111;
+            margin: 0;
+        }
+
+        .profile-age {
+            font-size: 12px;
+            color: #e2e2e2;
+            margin: 0;
+            padding-top: 5px;
+        }
+
+        .profile-description {
+            font-size: 12px;
+            color:#333;
+            line-height: 1.4;
+            margin: 0 0 20px 0;
+            flex-grow: 1;
+        }
+
+        .profile-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .tag-workout {
+            background-color: #d4edff;
+            color: #000000;
+        }
+
+        .tag-frequency {
+            background-color: #e8ffaf;
+            color: #000000;
+        }
+
+        .date-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .month-year {
+            font-size: 22px;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .nav-buttons button {
+            border: none;
+            background-color: #f5f5f5;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 16px;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .week-view {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            width: 45px;
+            height: 65px;
+            text-align: center;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .day-initial {
+            font-size: 14px;
+            color: #d4d4d4;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .day-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .day.selected {
+            background-color: #b5a2ff;
+        }
+
+        .day.selected .day-initial,
+        .day.selected .day-number {
+            color: #3f3d3d;
+        }
+
+        .card-2{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width:590px;
+            height: 260px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .cycling-section{
+            display: flex;
+            height: 260px;
+            flex-direction: column;
+            justify-content: space-between; 
+            margin-top: 3%;
+        }
+
+       .cycling-widget {
+            display: flex;
+            justify-content: space-around; 
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .period-section, .variation-section, .length-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 120px;
+            height: 150px;
+            position: relative;
+        }
+
+        .chart-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .chart-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+            padding-top: 5px;
+        }
+
+        .chart-label {
+            font-size: 16px;
+            color: #d4d4d4;
+        }
+
+        .progress-ring {
+            width: 100%;
+            height: 100%;
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-linecap: round;
+        }
+
+        .steps-section .progress-ring__circle{
+            transform: rotate(90deg);
+        }
+        
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 14;
+        }
+        
+        .progress-ring__bg {
+            stroke: #f3f3f3;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-section {
+                flex-wrap: wrap; /* Allow wrapping on medium screens */
+                justify-content: center; /* Center the content */
+            }
+
+            .left-section, .right-section, .last-section {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 1%;
+            }
+
+            .card-2, .card-3, .card-4 {
+                width: 90%;
+            }
+
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+                text-align: center;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                border-radius: 30px;
+            }
+
+            .activity-section {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                padding-left: 0;
+            }
+
+            .first-section, .second-section, .fourth-section, .fifth-section, .sixth-section, .seventh-section {
+                flex-direction: column;
+                width: 100%;
+                gap: 20px;
+            }
+
+            .card, .small-card, .card-2, .card-3, .card-4 {
+                width: 100%;
+                max-width: 450px;
+                height: auto;
+            }
+
+            .card-2 {
+                height: auto;
+                padding-bottom: 20px;
+            }
+
+            .cycling-section {
+                margin-top: 1%;
+                 height: auto;
+            }
+
+            .cycling-widget {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .month-year {
+                font-size: 18px;
+            }
+
+            .day {
+                width: 40px;
+            }
+            
+            .fifth-section .card {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome To Your Dashboard !!</h1>
+            
+        </header>
+        <nav>
+            <div class="activity-section">
+                <a href="/workouts.html">Workouts</a>
+                <a href="/meals.html">Meals</a>
+                <a href="/goals.html">Goals</a>
+                <a href="/progress.html">Progress</a>
+            </div>
+            <button id="logoutBtn">Logout</button>
+        </nav>
+        <main>
+            <div class="main-section">
+                <div class="left-section">
+                <div class="first-section">
+                <div class="card">
+                    <div class="calorie-section">
+                        <div class="card-title">Calories Burnt</div>
+                        <div class="card-icon">🔥</div>
+                    </div>
+                    <div class="card-count"><span>KCal</span></div>
+                </div>
+                <div class="card">
+                    <div class="distance-section">
+                        <div class="card-title">Distance Covered</div>
+                        <div class="card-icon">🏃</div>
+                    </div>
+                    <div class="card-count"><span>Km</span></div>
+                </div>
+            </div>
+
+            <div class="second-section">
+                <div class="card-3">
+                    <div class="date-selector-header">
+            <div id="month-year" class="month-year"></div>
+            <div class="nav-buttons">
+                <button id="prev-week">←</button>
+                <button id="next-week">→</button>
+            </div>
+        </div>
+        <ul id="week-view" class="week-view">
+            <!-- Days will be generated by JavaScript -->
+        </ul>
+                </div>
+            </div>
+            <div class="fourth-section">
+                <div class="card">
+                    <div class="hours-section">
+                        <div class="card-title">Total Hours</div>
+                        <div class="card-icon">🛌</div>
+                    </div>
+                    <div class="card-count"><span>hours</span></div>
+                </div>
+                <div class="card">
+                    <div class="bedtime-section">
+                        <div class="card-title">Time in Bed</div>
+                        <div class="card-icon">🛏️</div>
+                    </div>
+                    <div class="card-count"><span>hours</span></div>
+                </div>
+            </div>
+            </div>
+            
+
+            <div class="right-section">
+                <div class="card-2">
+                <div class="cycling-section">
+                    <div class="card-title" style="width: 400px;">Cycle Statistics</div>
+                    <div class="cycling-widget">
+
+                        <!-- Period Length Indicator -->
+                        <div class="period-section">
+                            <div class="chart-container">
+                                <svg class="progress-ring" viewBox="0 0 120 120">
+                                    <circle class="progress-ring__bg" cx="60" cy="60" r="52" />
+                                    <circle class="progress-ring__circle"
+                                        stroke="#ff9b9b"
+                                        stroke-dasharray="326.7"
+                                        stroke-dashoffset="245"
+                                        cx="60" cy="60" r="52" />
+                                </svg>
+                                <div class="chart-text">
+                                    <div class="chart-number"></div>
+                                    <div class="chart-label">days</div>
+                                </div>
+                            </div>
+                            <div class="card-count">Period Length</div>
+                        </div>
+
+                        <!-- Cycle Variation Indicator -->
+                        <div class="variation-section">
+                            <div class="chart-container">
+                                <svg class="progress-ring" viewBox="0 0 120 120">
+                                    <circle class="progress-ring__bg" cx="60" cy="60" r="52" />
+                                    <circle class="progress-ring__circle"
+                                        stroke="#b4e494"
+                                        stroke-dasharray="30 18" 
+                                        cx="60" cy="60" r="52" />
+                                </svg>
+                                <div class="chart-text">
+                                    <div class="chart-number"></div>
+                                    <div class="chart-label">days</div>
+                                </div>
+                            </div>
+                            <div class="card-count">Cycle Variation</div>
+                        </div>
+
+                        <!-- Cycle Length Indicator -->
+                        <div class="length-section">
+                            <div class="chart-container">
+                                <svg class="progress-ring" viewBox="0 0 120 120">
+                                    <circle class="progress-ring__bg" cx="60" cy="60" r="52" />
+                                    <circle class="progress-ring__circle"
+                                        stroke="#c7b6f3"
+                                        stroke-dasharray="326.7"
+                                        stroke-dashoffset="40"
+                                        cx="60" cy="60" r="52" />
+                                </svg>
+                                <div class="chart-text">
+                                    <div class="chart-number"></div>
+                                    <div class="chart-label">days</div>
+                                </div>
+                            </div>
+                            <div class="card-count">Cycle Length</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="fifth-section">
+                <div class="card">
+                    <div class="rest-section">
+                        <div class="card-title">Restful-ness</div>
+                        <div class="card-icon">🌜</div>
+                    </div>
+                    <div class="card-count"><span>%</span></div>
+                </div>
+                <div class="card">
+                    <div class="heart-section">
+                        <div class="card-title" style="width: 300px;">Resting Heart Rate</div>
+                        <div class="card-icon">🫀</div>
+                    </div>
+                    <div class="card-count"><span>hours</span></div>
+                </div>
+
+                <div class="small-card">
+                    <div class="steps-section">
+                        <div class="chart-container">
+                        <svg class="progress-ring" viewBox="0 0 120 120">
+                            <circle class="progress-ring__bg" cx="60" cy="60" r="52" />
+                            <circle class="progress-ring__circle"
+                                stroke="#A6B2EB"
+                                stroke-dasharray="200.9"
+                                stroke-dashoffset="40"
+                                cx="60" cy="60" r="52" />
+                        </svg>
+                        <div class="chart-text">
+                            <div class="chart-label" style="font-size: 20px;">👟</div>
+                            <div class="chart-number" style="color: black;">0</div>
+                        </div>
+                    </div>
+                    <div class="card-count" style="margin-right: 20px;font-weight: 500;color: #d4d4d4;">Steps</div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+            <div class="last-section">
+                <div class="sixth-section">
+                <div class="card">
+                    <div class="swimming-section">
+                        <div class="card-title">Swimming Distance</div>
+                        <div class="card-icon">🏊‍♂️</div>
+                    </div>
+                    <div class="card-count"><span>Yd</span></div>
+                </div>
+                <div class="card">
+                    <div class="water-section">
+                        <div class="card-title">Water</div>
+                        <div class="card-icon">💧</div>
+                    </div>
+                    <div class="card-count"><span>ml</span></div>
+                </div>
+            </div>
+
+            <div class="seventh-section">
+                <div class="card">
+                    <div class="weightlift-section">
+                        <div class="card-title">weightlifting</div>
+                        <div class="card-icon">🏋️‍♂️</div>
+                    </div>
+                    <div class="card-count"><span>min</span></div>
+                </div>
+                <div class="card">
+                    <div class="running-section">
+                        <div class="card-title">Running time</div>
+                        <div class="card-icon">🏃‍♂️</div>
+                    </div>
+                    <div class="card-count"><span>min</span></div>
+                </div>
+            </div>
+
+            <div class="card-4">
+        <div class="profile-container">
+			<div class="profile-header">
+			    <label for="profileImageUpload" style="cursor: pointer;">
+			        <img src="/images/default-avatar.png" alt="Profile" class="profile-pic" id="profilePic">
+			    </label>
+			    <input type="file" id="profileImageUpload" style="display: none;" accept="image/png, image/jpeg">
+			    
+			    <div class="profile-info">
+			        <h3 class="profile-name"></h3>
+			        <p class="profile-age"></p>
+			    </div>
+			</div>
+            <p class="profile-description" style="color:black">
+            </p>
+            <div class="profile-tags">
+                <span class="tag tag-workout">Casual Workout</span>
+                <span class="tag tag-frequency">Strict Diet</span>
+            </div>
+        </div>
+    </div>
+
+            </div>
+            
+            </div>  
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const monthYearEl = document.getElementById('month-year');
+            const weekViewEl = document.getElementById('week-view');
+            const prevWeekBtn = document.getElementById('prev-week');
+            const nextWeekBtn = document.getElementById('next-week');
+
+            let currentDate = new Date();
+
+            const renderWeek = () => {
+                weekViewEl.innerHTML = '';
+                const year = currentDate.getFullYear();
+                const month = currentDate.toLocaleString('default', { month: 'long' });
+                monthYearEl.textContent = `${month} ${year}`;
+
+                let startOfWeek = new Date(currentDate);
+                startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+
+                for (let i = 0; i < 7; i++) {
+                    let day = new Date(startOfWeek);
+                    day.setDate(day.getDate() + i);
+
+                    const dayItem = document.createElement('li');
+                    dayItem.classList.add('day');
+                    dayItem.dataset.date = day.toISOString();
+
+                    if (day.toDateString() === currentDate.toDateString()) {
+                        dayItem.classList.add('selected');
+                    }
+                    
+                    const dayInitial = day.toLocaleDateString('en-US', { weekday: 'narrow' });
+                    const dayNumber = String(day.getDate()).padStart(2, '0');
+
+                    dayItem.innerHTML = `
+                        <span class="day-initial">${dayInitial}</span>
+                        <span class="day-number">${dayNumber}</span>
+                    `;
+
+                    weekViewEl.appendChild(dayItem);
+                }
+            };
+            
+            weekViewEl.addEventListener('click', (e) => {
+                const selectedDay = e.target.closest('.day');
+                if (!selectedDay) return;
+
+                currentDate = new Date(selectedDay.dataset.date);
+                
+                renderWeek();
+            });
+
+            prevWeekBtn.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() - 7);
+                renderWeek();
+            });
+
+            nextWeekBtn.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() + 7);
+                renderWeek();
+            });
+
+            renderWeek();
+        });
+    </script>
+    <script src="/js/script.js"></script>
+</body>
+</html>

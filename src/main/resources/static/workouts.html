@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Workouts</title>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Smooch+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background:linear-gradient(to bottom right,rgb(113, 75, 0) ,rgb(0, 0, 0) , rgb(46, 31, 0)100% );
+            min-height: 95vh;
+            height: auto;
+            font-family: Inter;
+        }
+
+        header h1{
+            font-family: Outfit, sans-serif;
+            font-size: 2.5em; 
+            background: linear-gradient(to bottom right,rgb(255, 217, 0) 35%, rgb(255, 174, 0) 100%);
+            background-clip: text; 
+            color: transparent;
+            background-size: 200% auto; 
+            animation: animate-gradient-text 3s linear infinite; 
+        }
+
+       @keyframes animate-gradient-text {
+        to {
+            background-position:200% center;
+        }
+        }
+
+        .container{
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+
+        .back-link{
+            padding: 7px 15px;
+            font-size: 14px;
+            font-family: Inter;
+            font-weight: 500;
+            background-color: rgb(255, 218, 137);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            margin-right: 3%;
+            transition: all .5s;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        .back-link:hover{
+            background-color: white;
+            border: 3px solid;
+            border-color: rgb(255, 218, 137);
+        }
+
+        .workout-title-section{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            padding: 10px;
+            width: 97%;
+            margin-bottom: 1%;
+        }
+
+        .workout-title{
+            color:whitesmoke;
+            font-weight: 700;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+
+        .tiny-card{
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 540px;
+            height: 55px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .tiny-card input{
+            padding: 7px;
+            padding-left: 20px;
+            width: 330px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tiny-card label{
+            font-weight: 700;
+            font-size: 18px;
+            margin-left: 20px;
+            margin-right: 10px;
+        }
+
+        .workout-section {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            margin-top: 2%;
+        }
+
+        .small-card {
+           background: rgba(255, 255, 255, 0.397);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 540px; 
+            height: 190px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            text-align: left; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .calorie-card {
+           background: rgba(255, 255, 255, 0.397);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 540px; 
+            height: 140px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            text-align: left; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .card-title {
+            color: #000;
+            font-size: 18px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .timer-interface {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Arrows Layout */
+        .arrow-row {
+            display: flex;
+            width: 320px; /* Match width of display box roughly */
+            justify-content: flex-start; /* Align with digits */
+            padding-left: 12px; /* Fine tune alignment */
+        }
+
+        .arrow-wrapper {
+            width: 50px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity 0.2s;
+            margin-left: 1px;
+        }
+
+        .arrow-wrapper:hover {
+            opacity: 1;
+        }
+
+        .arrow-icon {
+            width: 50px;
+            height: 50px;
+            fill: #ffffff;
+        }
+
+        /* Spacers to align arrows with numbers, skipping colons */
+        .spacer { 
+            width: 70px;
+            margin-top: 30px; 
+        }
+        .spacer-wide { width: 80px; }
+
+        /* The Black Box Display */
+        .display-box {
+            background-color: #000;
+            border-radius: 12px;
+            width: 340px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            margin: 2px 0; /* Space between arrows and box */
+            border-bottom: 3px solid #ffb74d; /* The orange underline effect */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        /* The Numbers */
+        .digit-group {
+            font-family: 'Inter', sans-serif; /* Or 'Courier New' for monospace look */
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffb74d; /* Orange text */
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 50px;
+            text-align: center;
+            transition: background 0.3s;
+            user-select: none;
+        }
+
+        /* The Grey Highlight Box */
+        .digit-group.active {
+            background-color: rgba(255, 255, 255, 0.35);
+            color: #ffcd80; /* Slightly lighter orange when active */
+        }
+
+        .colon {
+            color: #ffb74d;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 5px;
+            padding-bottom: 4px;
+        }
+
+        /* The Min/Hr Label */
+        .unit-label {
+            color: #ffb74d;
+            font-size: 32px;
+            font-weight: 800;
+            margin-left: 10px;
+            width: 70px; /* Fixed width to prevent jumping */
+        }
+
+        .card-3 {
+            background: rgba(255, 255, 255, 0.397);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 540px;
+            height: 170px;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: Inter;
+        }
+
+        .date-selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .month-year {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .nav-buttons button {
+            border: none;
+            background-color: #f5f5f5;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 16px;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #e9e9e9;
+        }
+
+        .week-view {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            width: 45px;
+            height: 65px;
+            text-align: center;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .day-initial {
+            font-size: 14px;
+            color: #d4d4d4;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .day-number {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .day.selected {
+            background-color: #ffe3a2;
+        }
+
+        .day.selected .day-initial,
+        .day.selected .day-number {
+            color: #3a3a3a;
+        }
+
+        .calorie-widget-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Space between buttons and the bar */
+        }
+
+        .calorie-button {
+            border: none;
+            background: none;
+            font-size: 30px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .progress-track {
+            flex-grow: 1; /* Allows the bar to fill the space */
+            height: 20px;
+            background-color: #fee4b9; /* Lighter orange for the track */
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden; /* Ensures the fill stays within the rounded corners */
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #f98e2c; /* Darker orange for the fill */
+            border-radius: 10px;
+            width: 0; /* Initial width is set by JavaScript */
+            transition: width 0.2s ease-in-out;
+        }
+
+        .calorie-display {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        .calorie-display .value {
+            font-weight: 700;
+            color: #111;
+        }
+
+        .calorie-display .unit {
+            font-weight: 500;
+            color: #e6e6e6;
+        }
+
+        .second-section{
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            margin-top: 2%;
+        }
+
+        #workoutForm{
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            align-items: start;
+        }
+
+        .log-btn{
+            width: 540px;
+            padding: 6px;
+            font-size: 18px;
+            font-family: Inter;
+            font-weight: 600;
+            background-color: rgb(255, 218, 137);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            margin-right: 3%;
+            transition: all .5s;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+
+        .log-btn:hover{
+            background-color: rgb(255, 255, 255);
+            border: 3px solid;
+            border-color: rgb(213, 160, 47);
+        }
+
+        .content-section{
+            display: flex;
+            column-gap: 100px;
+        }
+
+        #workoutList table{
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8.1px);
+            -webkit-backdrop-filter: blur(8.1px);
+            width: 800px;
+            font-family: Inter;
+            font-size: 18px;
+            font-weight: 500;
+            border-collapse: collapse;
+        }
+        
+        #workoutList table th{
+            padding: 15px;
+            margin-top:10px;
+            padding-left: 45px;
+            padding-top: 20px;
+            color: #ffe3a2;
+            text-align: left;
+        }
+    
+        #workoutList tbody td{
+            padding: 15px;
+            padding-left: 45px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            color: whitesmoke;
+        }
+    
+        #workoutList tr:last-child td {
+            border-bottom: none; /* Remove border from the last row */
+        }
+        
+        #workoutList tr{
+            text-align: left;
+        }
+
+        @media (max-width: 1350px) {
+            .content-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 50px;
+            }
+            .data-list-section {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #workoutList, #workoutList table {
+                width: 100%;
+                max-width: 800px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container data-container">
+        <header>
+            <h1>Manage Workouts</h1>
+        </header>
+        
+         <div class="workout-title-section">
+            <div class="workout-title">Log a New Workout</div> 
+            <a href="/dashboard.html" class="back-link">Back to Dashboard</a>
+        </div>
+
+
+        <div class="content-section">
+            <section class="form-section">
+            
+            <form id="workoutForm">
+                <div class="workout-section">
+                    <div class="tiny-card">
+                        <label for="type">Workout Type:</label>
+                        <input type="text" id="type" placeholder="e.g., Running, Weightlifting" required>
+                    </div>
+
+                    <div class="small-card">
+                        <div class="card-title">Duration</div>
+
+                        <div class="timer-interface">
+                            <!-- Top Arrows -->
+                            <div class="arrow-row">
+                                <div class="arrow-wrapper" id="timer-hr-up">
+                                    <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
+                                </div>
+                                <div class="spacer"></div> <!-- Spacer for colon -->
+                                <div class="arrow-wrapper" id="timer-min-up">
+                                    <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
+                                </div>
+                                <div class="spacer-wide"></div> <!-- Spacer for label -->
+                            </div>
+
+                            <!-- Time Display Box -->
+                            <div class="display-box">
+                                <!-- Hour Section -->
+                                <div class="digit-group" id="hour-group">
+                                    <span id="hour-val">00</span>
+                                </div>
+                                
+                                <span class="colon">:</span>
+                                
+                                <!-- Minute Section -->
+                                <div class="digit-group active" id="min-group">
+                                    <span id="min-val">30</span>
+                                </div>
+                                
+                                <span class="colon">:</span>
+                                
+                                <!-- Label -->
+                                <span class="unit-label" id="unit-label">Min</span>
+                            </div>
+
+                            <!-- Bottom Arrows -->
+                            <div class="arrow-row" style="margin-top: 10px">
+                                <div class="arrow-wrapper" id="timer-hr-down">
+                                    <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg>
+                                </div>
+                                <div class="spacer" ></div>
+                                <div class="arrow-wrapper" id="timer-min-down">
+                                    <svg class="arrow-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg>
+                                </div>
+                                <div class="spacer-wide"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="second-section">
+
+                    <div class="calorie-card">
+                        <div class="calorie-widget-title">Calories</div>
+                        
+                        <div class="slider-container">
+                            <button type="button" id="calorie-plus" class="calorie-button">+</button>
+                            <div class="progress-track">
+                                <div id="calorie-progress-fill" class="progress-fill"></div>
+                            </div>
+                            <button type="button" id="calorie-minus" class="calorie-button">-</button>
+                        </div>
+
+                        <div id="calorie-display" class="calorie-display" style="font-size: 18px;">
+                            <span class="value">150</span> <span class="unit">kcal</span>
+                        </div>
+                    </div>
+
+                    <div class="card-3">
+                    <div class="date-selector-header">
+                        <div id="month-year" class="month-year"></div>
+                        <div class="nav-buttons">
+                            <button id="prev-week">←</button>
+                            <button id="next-week">→</button>
+                        </div>
+                    </div>
+                    <ul id="week-view" class="week-view">
+                        <!-- Days will be generated by JavaScript -->
+                    </ul>
+                    </div>
+
+                    
+                 </div>
+
+                <button type="submit" class="log-btn">Log Workout</button>
+            </form>
+            <p id="message" class="message"></p>
+        </section>
+
+        <section class="data-list-section">
+            <h2 style="color: white;">Your Logged Workouts</h2>
+            <div id="workoutList" class="data-list">
+                <!-- Workouts will be loaded here via JavaScript -->
+            </div>
+        </section>
+        </div>
+        
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>

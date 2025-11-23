@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health & Fitness App</title>
+    <script>
+        // Redirect logic: if token exists, go to dashboard, else go to login
+        window.onload = function() {
+            if (localStorage.getItem('jwtToken')) {
+                window.location.href = '/dashboard.html';
+            } else {
+                window.location.href = '/login.html';
+            }
+        };
+    </script>
+</head>
+<body>
+    <p>Loading...</p>
+</body>
+</html>
